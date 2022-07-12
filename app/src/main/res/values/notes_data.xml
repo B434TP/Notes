@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="titlesArray">
+        <item>Список покупок</item>
+        <item>Кому позвонить</item>
+        <item>Простой рецепт</item>
+        <item>Родство</item>
+        <item>Породы кошек</item>
+        <item>Тест1</item>
+        <item>Тест2</item>
+        <item>Тест3</item>
+        <item>Тест4</item>
+        <item>Тест5</item>
+        <item>Тест6</item>
+        <item>Тест7</item>
+        <item>Тест8</item>
+        <item>Тест9</item>
+        <item>Тест10</item>
+        <item>Тест11</item>
+        <item>Тест12</item>
+        <item>Тест13</item>
+        <item>Тест14</item>
+        <item>Тест15</item>
+        <item>Тест16</item>
+        <item>Тест17</item>
+        <item>Тест18</item>
+    </string-array>
+
+    <string-array name="textArray">
+        <item>Картошка 5 кг, капуста 1 шт, яйца 1 дес, велосипед трехклесный 1 шт</item>
+        <item>Папа, мама, дедушка, бабушка, Спортлото, милиция</item>
+        <item>Яйцо вбить в сковороду с раскалённым маслом и круговыми движениями распределить белок так, чтобы он равномерно растёкся по сковороде</item>
+        <item>Отношения между индивидами, основанные на происхождении от общего предка или возникшие в результате заключения брака, организующие социальные группы и роли. Лица, находящиеся в отношениях родства, называются родственниками</item>
+        <item>Всемирная федерация кошек разделяет породы на 4 группы: Длинношёрстные, Полудлинношерстные, Короткошёрстные, Сиамо-Ориентальная короткошёрстные</item>
+        <item>Тест</item>
+        <item>Тест</item>
+        <item>Тест</item>
+        <item>Тест</item>
+        <item>Тест</item>
+        <item>Тест</item>
+        <item>Тест</item>
+        <item>Тест</item>
+        <item>Тест</item>
+        <item>Тест</item>
+        <item>Тест</item>
+        <item>Тест</item>
+        <item>Тест</item>
+        <item>Тест</item>
+        <item>Тест</item>
+        <item>Тест</item>
+        <item>Тест</item>
+        <item>Тест</item>
+    </string-array>
+
+</resources>

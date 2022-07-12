@@ -3,16 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/notesListContainer"
+            android:id="@+id/noteDetailContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical" />
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
+
 
 </FrameLayout>

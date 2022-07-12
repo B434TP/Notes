@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="note_list_text_size">10sp</dimen>
+    <dimen name="note_detail_text_size_title">10sp</dimen>
+    <dimen name="note_detail_text_size_main">8sp</dimen>
+    <dimen name="note_detail_text_size_service">5sp</dimen>
+</resources>
