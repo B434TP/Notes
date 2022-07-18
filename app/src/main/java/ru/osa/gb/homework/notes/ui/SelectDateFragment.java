@@ -2,11 +2,15 @@ package ru.osa.gb.homework.notes.ui;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.DatePicker;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.DialogFragment;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 
 import ru.osa.gb.homework.notes.model.Note;
@@ -35,10 +39,18 @@ public class SelectDateFragment extends DialogFragment implements DatePickerDial
     }
 
     public void populateSetDate(int year, int month, int day) {
-        String selectedDate = month + "/" + day + "/" + year;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        String strMonth = String.valueOf(month);
+        String strDay = String.valueOf(day);
+        if (month < 10) {strMonth = "0" + strMonth;}
+        if (day < 10) {strDay = "0" + strDay;}
+
+        String str = year  + "-" + strMonth  + "-" + strDay + " 00:00";
+        LocalDateTime selectedDate = LocalDateTime.parse(str, formatter);
+
         NotesRepository nr = NotesRepoImpl.getInstance(getContext());
         Note noteToEdit = nr.getNote(id);
-        noteToEdit.setCreateDate(selectedDate);
+        noteToEdit.setChangeDate(selectedDate);
         nr.editNote(noteToEdit);
     }
 }

@@ -5,12 +5,16 @@
     android:layout_height="match_parent"
     tools:context=".ui.NoteDetailFragment">
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/noteDetailContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" />
 
+    </androidx.core.widget.NestedScrollView>
 
 </FrameLayout>

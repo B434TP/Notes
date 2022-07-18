@@ -1,13 +1,12 @@
 package ru.osa.gb.homework.notes.ui;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,18 +24,15 @@ import ru.osa.gb.homework.notes.model.NotesRepository;
 public class NotesListFragment extends Fragment {
 
     public static final String BUNDLE_NOTE_ID = "noteID";
+    private static NotesListFragment fragment;
     private int selectedNoteId;
     NoteDetailFragment noteDetailFragment;
-    NoteDetailFragment fragmentToRemove;
 
     private NotesRepository notesRepository;
 
-    public NotesListFragment() {
-        // Required empty public constructor
-    }
+    public static NotesListFragment getInstance() {
 
-    public static NotesListFragment newInstance() {
-        NotesListFragment fragment = new NotesListFragment();
+        fragment = new NotesListFragment();
 
         return fragment;
     }
@@ -44,25 +40,19 @@ public class NotesListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        notesRepository = NotesRepoImpl.getInstance(getContext());
-        Log.d("NotesList", "onCreate: done");
-
-        if (savedInstanceState != null && isPortrait()) {
-            int noteId = savedInstanceState.getInt(BUNDLE_NOTE_ID);
-            showNoteDetail(notesRepository.getNote(noteId));
-        }
+        Log.d("FRMS", "NotesListFragment onCreate: done");
 
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        Log.d("NotesList", "onCreateView: done");
 
         View notesListView = inflater.inflate(R.layout.fragment_notes_list, container, false);
 
+        ViewGroup listContainer = notesListView.findViewById(R.id.NoteListContainer);
 
+        notesRepository = NotesRepoImpl.getInstance(notesListView.getContext());
         List<Note> notesList = notesRepository.getAllNotes();
 
         for (Note item : notesList
@@ -70,12 +60,14 @@ public class NotesListFragment extends Fragment {
             TextView note = new TextView(getContext());
             note.setText(item.getTitle());
             note.setTextSize(getActivity().getResources().getDimension(R.dimen.note_list_text_size));
-            container.addView(note);
+            listContainer.addView(note);
             note.setOnClickListener(v -> {
                 selectedNoteId = item.getId();
                 showNoteDetail(item);
             });
         }
+
+        Log.d("FRMS", "NotesListFragment onCreateView: done");
         return notesListView;
     }
 
@@ -89,39 +81,36 @@ public class NotesListFragment extends Fragment {
 
     private void showLandScapeNoteDetail(Note note) {
 
-        if (fragmentToRemove != null) {
-            getActivity().getSupportFragmentManager()
-                    .beginTransaction()
-                    .hide(fragmentToRemove)
-                    .remove(fragmentToRemove)
-                    .commitNow();
-            Log.d("LANDSCAPE", "Remove!!! " + fragmentToRemove);
 
+        noteDetailFragment = NoteDetailFragment.getInstance(note.getId());
 
-            final List<Fragment> fragments = getActivity().getSupportFragmentManager().getFragments();
-            for (Fragment fragment : fragments) {
-                Log.d("LANDSCAPE", "LIST ____ " + fragment);
-            }
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
 
+        ft.replace(R.id.notesDetailOnMain, noteDetailFragment, "NoteDetail");
+        // ft.addToBackStack(null);
+        Log.d("FRMS", "NoteDetailFragment: replace");
+        ft.commit();
 
-        }
-        noteDetailFragment = NoteDetailFragment.newInstance(note.getId());
-        fragmentToRemove = noteDetailFragment;
-
-        getActivity().getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.notesDetailOnMain, noteDetailFragment)
-                .commit();
 
         Log.d("LANDSCAPE", "NEW " + noteDetailFragment);
 
     }
 
+
     private void showPortraitNoteDetail(Note note) {
-        Activity activity = requireActivity();
-        Intent intent = new Intent(activity, NoteDetailActivity.class);
-        intent.putExtra(BUNDLE_NOTE_ID, note.getId());
-        startActivity(intent);
+
+        noteDetailFragment = NoteDetailFragment.getInstance(note.getId());
+
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        if (!noteDetailFragment.isAdded()) {
+            ft.replace(R.id.mainFragmentContainer, noteDetailFragment, "NoteDetail");
+            ft.addToBackStack(null);
+            Log.d("FRMS", "NoteDetailFragment: replace");
+            ft.commit();
+        }
+
     }
 
 

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.StartPageFragment">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center|top"
+        android:text="@string/start_here" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/startListBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:width="@dimen/btn_width"
+        android:height="@dimen/btn_height"
+        android:backgroundTint="@color/teal_700"
+        android:text="@string/notes_btn"
+        android:textColor="@color/purple_700" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/startAboutBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:width="@dimen/btn_width"
+        android:height="@dimen/btn_height"
+        android:backgroundTint="@color/teal_700"
+        android:text="@string/about_btn"
+        android:textColor="@color/purple_700"/>
+
+
+</LinearLayout>

@@ -1,26 +1,41 @@
 package ru.osa.gb.homework.notes.model;
 
 
-import java.util.Calendar;
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
+import java.time.LocalDateTime;
 
 public class Note {
     private int id;
     private String title;
     private String text;
-    // TODO: изменить тип данных на LocalDateTime
-    private String createDate;
+    private LocalDateTime changeDate;
     private String deadline;
     private String author;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public Note(int id, String title, String text) {
         this.id = id;
         this.title = title;
         this.text = text;
-        Calendar calendar = Calendar.getInstance();
-        this.createDate = String.valueOf(calendar.getTime());
+        this.changeDate = LocalDateTime.now();
         this.deadline = "tbd";
-        this.author = "system";
+        this.author = "System";
 
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void setTitle(String title) {
+        this.title = title;
+        this.changeDate = LocalDateTime.now();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void setText(String text) {
+        this.text = text;
+        this.changeDate = LocalDateTime.now();
     }
 
     public String getTitle() {
@@ -31,8 +46,8 @@ public class Note {
         return text;
     }
 
-    public String getCreateDate() {
-        return createDate;
+    public LocalDateTime getChangeDate() {
+        return changeDate;
     }
 
     public String getDeadline() {
@@ -53,14 +68,14 @@ public class Note {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", text='" + text + '\'' +
-                ", createDate='" + createDate + '\'' +
+                ", createDate='" + changeDate + '\'' +
                 ", deadline='" + deadline + '\'' +
                 ", author='" + author + '\'' +
                 '}';
     }
 
-    public void setCreateDate(String createDate) {
-        this.createDate = createDate;
+    public void setChangeDate(LocalDateTime changeDate) {
+        this.changeDate = changeDate;
     }
 }
 

@@ -17,7 +17,7 @@ public class NotesRepoImpl implements NotesRepository {
 
     private NotesRepoImpl(Context repoContext) {
         NotesRepoImpl.repoContext = repoContext;
-        notes = new ArrayList<Note>();
+        notes = new ArrayList<>();
         initRepoData();
     }
 
@@ -36,7 +36,7 @@ public class NotesRepoImpl implements NotesRepository {
 
         for (int i = 0; i < titlesRes.length; i++) {
             Note newNote = new Note(lastIndex, titlesRes[i], textsRes[i]);
-            Log.d("MyRepo", "addingNote: " + newNote.toString());
+            Log.d("MyRepo", "addingNote: " + newNote);
             notes.add(newNote);
             lastIndex++;
         }
