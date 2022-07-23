@@ -43,18 +43,41 @@ public class NotesRepoImpl implements NotesRepository {
     }
 
     @Override
-    public int getLastId() {
-        return lastIndex;
-    }
-
-    @Override
     public Note getNote(int id) {
         return notes.get(id);
     }
 
     @Override
-    public List<Note> getAllNotes() {
-        return notes;
+    public List<Note> getRemovedNotes() {
+        List<Note> removedList = new ArrayList<>();
+
+        for (Note item : notes
+        ) {
+            if (item.getRemoveStatus()) {
+                removedList.add(item);
+            }
+        }
+        return removedList;
+    }
+
+    @Override
+    public void restoreNote(int noteIdToRestore) {
+        Note note = getNote(noteIdToRestore);
+        note.setRemoveStatus(false);
+        editNote(note);
+    }
+
+    @Override
+    public List<Note> getNotes() {
+        List<Note> clearList = new ArrayList<>();
+
+        for (Note item : notes
+        ) {
+            if (!item.getRemoveStatus()) {
+                clearList.add(item);
+            }
+        }
+        return clearList;
     }
 
     @Override
@@ -71,6 +94,12 @@ public class NotesRepoImpl implements NotesRepository {
         notes.set(noteToEdit.getId(), noteToEdit);
     }
 
+
+    public void removeNote(int noteIdToRemove) {
+        Note note = getNote(noteIdToRemove);
+        note.setRemoveStatus(true);
+        editNote(note);
+    }
 
 
 }

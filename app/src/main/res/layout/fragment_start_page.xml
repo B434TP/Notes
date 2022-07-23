@@ -32,7 +32,7 @@
         android:width="@dimen/btn_width"
         android:height="@dimen/btn_height"
         android:backgroundTint="@color/teal_700"
-        android:text="@string/about_btn"
+        android:text="@string/about"
         android:textColor="@color/purple_700"/>
 
 

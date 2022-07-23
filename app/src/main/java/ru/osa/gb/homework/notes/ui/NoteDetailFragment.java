@@ -1,23 +1,30 @@
 package ru.osa.gb.homework.notes.ui;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
 import ru.osa.gb.homework.notes.R;
@@ -47,6 +54,9 @@ public class NoteDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        if (savedInstanceState == null) setHasOptionsMenu(true);
+
         View noteDetail = inflater.inflate(R.layout.fragment_note_detail, container, false);
 
         ViewGroup noteDetailContainer = noteDetail.findViewById(R.id.noteDetailContainer);
@@ -118,46 +128,78 @@ public class NoteDetailFragment extends Fragment {
         container.addView(noteAuthor);
 
 
-
-
         TextView noteDate = new TextView(context);
         noteDate.setText(getString(R.string.created_title) + " " + note.getChangeDate());
         noteDate.setTextSize(getActivity().getResources().getDimension(R.dimen.note_detail_text_size_service));
         noteDate.setTextColor(getActivity().getResources().getColor(R.color.note_service_info));
-        // container.addView(noteDate);
-
-        ImageView editBut = new ImageView(context);
-        editBut.setImageDrawable(getActivity().getDrawable(R.drawable.ic_baseline_edit_24));
-
-
-
-        editBut.setOnClickListener(view -> {
-            Toast.makeText(context, "Редактор", Toast.LENGTH_SHORT).show();
-            DialogFragment newFragment = new SelectDateFragment(noteId);
-            newFragment.show(getActivity().getSupportFragmentManager(), "DatePicker");
-
-        });
 
         ViewGroup dateDiv = new LinearLayout(context);
         ((LinearLayout) dateDiv).setOrientation(LinearLayout.HORIZONTAL);
         dateDiv.addView(noteDate);
-        dateDiv.addView(editBut);
+
 
         container.addView(dateDiv);
 
-//        Button backBtn = new Button(getActivity());
-//        backBtn.setText("Назад");
-//        backBtn.setOnClickListener(v -> {
-//                    NotesListFragment noteListFragment = NotesListFragment.getInstance();
-//                    FragmentManager fm = requireActivity().getSupportFragmentManager();
-//                    FragmentTransaction ft = fm.beginTransaction();
-//                    ft.replace(R.id.mainFragmentContainer, noteListFragment);
-//                    ft.commit();
-//            Log.d("FRMS", "NoteDetailFragment: remove");
-//                }
-//        );
-//
-//
-//        container.addView(backBtn);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        Log.d("NoteDetailFragment", "onCreateOptionsMenu: menu inflater");
+        inflater.inflate(R.menu.detail_fragment_menu, menu);
+
+        MenuItem item = menu.findItem(R.id.add_item);
+        if (item != null) {
+            item.setVisible(false);
+        }
+
+        item = menu.findItem(R.id.about_item);
+        if (item != null) {
+            item.setVisible(false);
+        }
+    }
+
+    @SuppressLint("ResourceAsColor")
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        Log.d("MNU", "onOptionsItemSelected: " + item);
+
+        switch (item.getItemId()) {
+            case R.id.edit_date_item:
+                DialogFragment newFragment = new SelectDateFragment(noteId);
+                newFragment.show(getActivity().getSupportFragmentManager(), "DatePicker");
+                break;
+            case R.id.delete_item:
+                NotesRepository repo = NotesRepoImpl.getInstance(getContext());
+                repo.removeNote(noteId);
+
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.remove(this);
+                ft.commit();
+
+                MainActivity ma = (MainActivity) getActivity();
+                ma.selectFragment(AllFragments.LIST);
+
+                Snackbar.make(getView(),"Заметка перемеща в корзину",3000)
+                        .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE)
+                        .setBehavior(new BaseTransientBottomBar.Behavior())
+                        .setAction("ОТМЕНА", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                NotesRepository repo = NotesRepoImpl.getInstance(getContext());
+                                repo.restoreNote(noteId);
+                                Bundle bundle = new Bundle();
+                                bundle.putString("ACTION", "REFRESH");
+                                getActivity().getSupportFragmentManager().setFragmentResult("NOTES_LIST_ACTION", bundle);
+                            }
+                        })
+                        .show();
+
+                break;
+
+        }
+
+
+        return super.onOptionsItemSelected(item);
     }
 }

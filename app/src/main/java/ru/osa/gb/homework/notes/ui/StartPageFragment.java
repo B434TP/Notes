@@ -18,15 +18,6 @@ import ru.osa.gb.homework.notes.R;
  */
 public class StartPageFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     public StartPageFragment() {
         // Required empty public constructor
     }
@@ -55,15 +46,13 @@ public class StartPageFragment extends Fragment {
         Button startBnt = frView.findViewById(R.id.startListBtn);
         startBnt.setOnClickListener(v -> {
             MainActivity ma = (MainActivity) getActivity();
-            ma.currentFragment = AllFragments.LIST;
-            ma.selectFragment();
+            ma.selectFragment(AllFragments.LIST);
         });
 
         Button aboutBnt = frView.findViewById(R.id.startAboutBtn);
         aboutBnt.setOnClickListener(v -> {
             MainActivity ma = (MainActivity) getActivity();
-            ma.currentFragment = AllFragments.ABOUT;
-            ma.selectFragment();
+            ma.selectFragment(AllFragments.ABOUT);
         });
 
         return frView;

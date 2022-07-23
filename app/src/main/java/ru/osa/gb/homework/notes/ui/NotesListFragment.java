@@ -1,18 +1,25 @@
 package ru.osa.gb.homework.notes.ui;
 
+import android.app.Activity;
 import android.content.res.Configuration;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentResultListener;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
@@ -29,6 +36,8 @@ public class NotesListFragment extends Fragment {
     NoteDetailFragment noteDetailFragment;
 
     private NotesRepository notesRepository;
+    private ViewGroup listContainer;
+    private View notesListView;
 
     public static NotesListFragment getInstance() {
 
@@ -48,27 +57,83 @@ public class NotesListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View notesListView = inflater.inflate(R.layout.fragment_notes_list, container, false);
 
-        ViewGroup listContainer = notesListView.findViewById(R.id.NoteListContainer);
+        notesListView = inflater.inflate(R.layout.fragment_notes_list, container, false);
+        listContainer = notesListView.findViewById(R.id.NoteListContainer);
+        fillNotesListView();
 
+
+        getActivity().getSupportFragmentManager().setFragmentResultListener("NOTES_LIST_ACTION", getViewLifecycleOwner(), new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                String signal = result.getString("ACTION");
+                if (signal == "REFRESH") {
+                    Log.d("FRMS", "NOTES_LIST_ACTION: REFRESH");
+                    fillNotesListView();
+                }
+            }
+        });
+
+
+        Log.d("FRMS", "NotesListFragment onCreateView: done");
+        return notesListView;
+    }
+
+    private void fillNotesListView() {
         notesRepository = NotesRepoImpl.getInstance(notesListView.getContext());
-        List<Note> notesList = notesRepository.getAllNotes();
-
+        List<Note> notesList = notesRepository.getNotes();
+        listContainer.removeAllViews();
         for (Note item : notesList
         ) {
             TextView note = new TextView(getContext());
             note.setText(item.getTitle());
             note.setTextSize(getActivity().getResources().getDimension(R.dimen.note_list_text_size));
             listContainer.addView(note);
+            initPopupMenu(listContainer, note, item.getId());
             note.setOnClickListener(v -> {
                 selectedNoteId = item.getId();
                 showNoteDetail(item);
             });
         }
+    }
 
-        Log.d("FRMS", "NotesListFragment onCreateView: done");
-        return notesListView;
+    private void initPopupMenu(ViewGroup listContainer, TextView noteListItem, int noteId) {
+        noteListItem.setOnLongClickListener(view -> {
+                    Activity act = getActivity();
+                    PopupMenu popupMenu = new PopupMenu(act, noteListItem);
+                    act.getMenuInflater().inflate(R.menu.list_fragment_popup, popupMenu.getMenu());
+                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem menuItem) {
+                            switch (menuItem.getItemId()) {
+                                case R.id.delete_popup_item:
+                                    listContainer.removeView(noteListItem);
+                                    NotesRepository repo = NotesRepoImpl.getInstance(getContext());
+                                    repo.removeNote(noteId);
+                                    Snackbar.make(getView(),"Заметка перемеща в корзину",3000)
+                                            .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE)
+                                            .setBehavior(new BaseTransientBottomBar.Behavior())
+                                            .setAction("ОТМЕНА", new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View view) {
+                                                    NotesRepository repo = NotesRepoImpl.getInstance(getContext());
+                                                    repo.restoreNote(noteId);
+                                                    Bundle bundle = new Bundle();
+                                                    bundle.putString("ACTION", "REFRESH");
+                                                    getActivity().getSupportFragmentManager().setFragmentResult("NOTES_LIST_ACTION", bundle);
+                                                }
+                                            })
+                                            .show();
+                                    break;
+                            }
+                            return false;
+                        }
+                    });
+                    popupMenu.show();
+
+                    return true;
+                }
+        );
     }
 
     private void showNoteDetail(Note note) {
@@ -88,7 +153,6 @@ public class NotesListFragment extends Fragment {
         FragmentTransaction ft = fm.beginTransaction();
 
         ft.replace(R.id.notesDetailOnMain, noteDetailFragment, "NoteDetail");
-        // ft.addToBackStack(null);
         Log.d("FRMS", "NoteDetailFragment: replace");
         ft.commit();
 

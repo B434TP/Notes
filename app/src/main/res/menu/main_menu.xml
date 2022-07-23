@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/add_item"
+        android:icon="@drawable/ic_baseline_note_add_24"
+        app:showAsAction="always"
+        android:title="@string/add" />
+
+    <item
+        android:id="@+id/about_item"
+        android:title="@string/about"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/exit_item"
+        android:title="@string/exit"
+        app:showAsAction="never"
+        android:menuCategory="secondary"/>
+
+
+</menu>

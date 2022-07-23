@@ -4,16 +4,27 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/YandexDisk/GB/dev/osaAndroidHW/Notes/app/src/main/res/drawable/ic_baseline_edit_24.xml" value="0.1" />
+        <entry key="..\:/YandexDisk/GB/dev/osaAndroidHW/Notes/app/src/main/res/drawable/ic_baseline_restore_from_trash_24.xml" value="0.2315" />
+        <entry key="..\:/YandexDisk/GB/dev/osaAndroidHW/Notes/app/src/main/res/drawable/ic_baseline_text_rotation_angleup_100.xml" value="0.3925" />
+        <entry key="..\:/YandexDisk/GB/dev/osaAndroidHW/Notes/app/src/main/res/drawable/ic_baseline_text_rotation_angleup_24.xml" value="0.3925" />
         <entry key="..\:/YandexDisk/GB/dev/osaAndroidHW/Notes/app/src/main/res/layout-land/activity_main.xml" value="0.25" />
         <entry key="..\:/YandexDisk/GB/dev/osaAndroidHW/Notes/app/src/main/res/layout-v31/fragment_start_page.xml" value="0.38697916666666665" />
-        <entry key="..\:/YandexDisk/GB/dev/osaAndroidHW/Notes/app/src/main/res/layout/activity_main.xml" value="0.31354166666666666" />
+        <entry key="..\:/YandexDisk/GB/dev/osaAndroidHW/Notes/app/src/main/res/layout/activity_main.xml" value="0.30383480825958703" />
         <entry key="..\:/YandexDisk/GB/dev/osaAndroidHW/Notes/app/src/main/res/layout/activity_note_detail.xml" value="0.31296296296296294" />
+        <entry key="..\:/YandexDisk/GB/dev/osaAndroidHW/Notes/app/src/main/res/layout/drawer_header.xml" value="0.3213675213675214" />
         <entry key="..\:/YandexDisk/GB/dev/osaAndroidHW/Notes/app/src/main/res/layout/fragment_about.xml" value="0.30683760683760686" />
         <entry key="..\:/YandexDisk/GB/dev/osaAndroidHW/Notes/app/src/main/res/layout/fragment_date_picker.xml" value="0.2465811965811966" />
         <entry key="..\:/YandexDisk/GB/dev/osaAndroidHW/Notes/app/src/main/res/layout/fragment_note_detail.xml" value="0.23373983739837398" />
         <entry key="..\:/YandexDisk/GB/dev/osaAndroidHW/Notes/app/src/main/res/layout/fragment_notes.xml" value="0.31354166666666666" />
         <entry key="..\:/YandexDisk/GB/dev/osaAndroidHW/Notes/app/src/main/res/layout/fragment_notes_list.xml" value="0.2290836653386454" />
+        <entry key="..\:/YandexDisk/GB/dev/osaAndroidHW/Notes/app/src/main/res/layout/fragment_recycle_bin.xml" value="0.36585365853658536" />
         <entry key="..\:/YandexDisk/GB/dev/osaAndroidHW/Notes/app/src/main/res/layout/fragment_start_page.xml" value="0.30683760683760686" />
+        <entry key="..\:/YandexDisk/GB/dev/osaAndroidHW/Notes/app/src/main/res/menu/detail_fragment_menu.xml" value="0.32222222222222224" />
+        <entry key="..\:/YandexDisk/GB/dev/osaAndroidHW/Notes/app/src/main/res/menu/detail_menu.xml" value="0.31837606837606836" />
+        <entry key="..\:/YandexDisk/GB/dev/osaAndroidHW/Notes/app/src/main/res/menu/drawer_header.xml" value="0.32222222222222224" />
+        <entry key="..\:/YandexDisk/GB/dev/osaAndroidHW/Notes/app/src/main/res/menu/drawer_menu.xml" value="0.32222222222222224" />
+        <entry key="..\:/YandexDisk/GB/dev/osaAndroidHW/Notes/app/src/main/res/menu/list_fragment_popup.xml" value="0.32222222222222224" />
+        <entry key="..\:/YandexDisk/GB/dev/osaAndroidHW/Notes/app/src/main/res/menu/main_menu.xml" value="0.25726495726495724" />
       </map>
     </option>
   </component>

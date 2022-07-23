@@ -4,14 +4,27 @@ import java.util.List;
 
 public interface NotesRepository {
 
-    int getLastId();
-
+    // Получить заметку по id
     Note getNote(int id);
 
-    List<Note> getAllNotes();
+    // Получить список всех заметок, без удаленных
+    List<Note> getNotes();
+
 
     int addNote(String title, String text);
 
+    // Редактировать заметку
     void editNote(Note data);
+
+    // Поместить заметку в корзину
+    void removeNote(int noteIdToRemove);
+
+
+    // TODO: для реализации корзины в будущем
+    // Получить список всех удаленных заметок
+    List<Note> getRemovedNotes();
+
+    // Восстановить удаленную заметку
+    void restoreNote(int noteIdToRestore);
 
 }

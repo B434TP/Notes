@@ -14,6 +14,7 @@ public class Note {
     private LocalDateTime changeDate;
     private String deadline;
     private String author;
+    private Boolean isRemoved;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public Note(int id, String title, String text) {
@@ -23,19 +24,28 @@ public class Note {
         this.changeDate = LocalDateTime.now();
         this.deadline = "tbd";
         this.author = "System";
+        this.isRemoved = false;
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
+
     public void setTitle(String title) {
         this.title = title;
         this.changeDate = LocalDateTime.now();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
+
     public void setText(String text) {
         this.text = text;
         this.changeDate = LocalDateTime.now();
+    }
+
+    protected Boolean getRemoveStatus() {
+        return isRemoved;
+    }
+
+    protected void setRemoveStatus(Boolean removed) {
+        isRemoved = removed;
     }
 
     public String getTitle() {
@@ -48,10 +58,6 @@ public class Note {
 
     public LocalDateTime getChangeDate() {
         return changeDate;
-    }
-
-    public String getDeadline() {
-        return deadline;
     }
 
     public String getAuthor() {
@@ -68,9 +74,10 @@ public class Note {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", text='" + text + '\'' +
-                ", createDate='" + changeDate + '\'' +
+                ", changeDate=" + changeDate +
                 ", deadline='" + deadline + '\'' +
                 ", author='" + author + '\'' +
+                ", isRemoved=" + isRemoved +
                 '}';
     }
 
