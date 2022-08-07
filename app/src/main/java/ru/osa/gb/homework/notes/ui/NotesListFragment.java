@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentResultListener;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ru.osa.gb.homework.notes.R;
@@ -60,7 +62,11 @@ public class NotesListFragment extends Fragment {
 
         notesListView = inflater.inflate(R.layout.fragment_notes_list, container, false);
         listContainer = notesListView.findViewById(R.id.NoteListContainer);
-        fillNotesListView();
+
+        RecyclerView recyclerView = notesListView.findViewById(R.id.NoteListContainer);
+
+
+        fillNotesListView(recyclerView);
 
         getActivity().getSupportFragmentManager().setFragmentResultListener("NOTES_LIST_ACTION", getViewLifecycleOwner(), new FragmentResultListener() {
             @Override
@@ -68,7 +74,7 @@ public class NotesListFragment extends Fragment {
                 String signal = result.getString("ACTION");
                 if (signal == "REFRESH") {
                     Log.d("FRMS", "NOTES_LIST_ACTION: REFRESH");
-                    fillNotesListView();
+                    fillNotesListView(recyclerView);
                 }
             }
         });
@@ -77,22 +83,35 @@ public class NotesListFragment extends Fragment {
         return notesListView;
     }
 
-    private void fillNotesListView() {
+    private void fillNotesListView(RecyclerView recyclerView) {
         notesRepository = NotesRepoImpl.getInstance(notesListView.getContext());
-        List<Note> notesList = notesRepository.getNotes();
-        listContainer.removeAllViews();
-        for (Note item : notesList
-        ) {
-            TextView note = new TextView(getContext());
-            note.setText(item.getTitle());
-            note.setTextSize(getActivity().getResources().getDimension(R.dimen.note_list_text_size));
-            listContainer.addView(note);
-            initPopupMenu(listContainer, note, item.getId());
-            note.setOnClickListener(v -> {
-                selectedNoteId = item.getId();
-                showNoteDetail(item);
-            });
-        }
+        List<Note> notesList =  notesRepository.getNotes();
+
+        NotesListAdapter notesListAdapter = new NotesListAdapter((ArrayList<Note>) notesList);
+
+        recyclerView.setAdapter(notesListAdapter);
+
+        notesListAdapter.setItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position, int positionId) {
+                showNoteDetail(notesRepository.getNote(positionId));
+            }
+
+        });
+
+
+//        for (Note item : notesList
+//        ) {
+//            TextView note = new TextView(getContext());
+//            note.setText(item.getTitle());
+//            note.setTextSize(getActivity().getResources().getDimension(R.dimen.note_list_text_size));
+//            listContainer.addView(note);
+//            initPopupMenu(listContainer, note, item.getId());
+//            note.setOnClickListener(v -> {
+//                selectedNoteId = item.getId();
+//                showNoteDetail(item);
+//            });
+//        }
     }
 
     private void initPopupMenu(ViewGroup listContainer, TextView noteListItem, int noteId) {
