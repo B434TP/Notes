@@ -21,27 +21,27 @@
             android:id="@+id/NoteListContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+            <!--            <LinearLayout-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--            android:orientation="horizontal">-->
 
-<!--                <TextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="test text test text"-->
-<!--                    android:textSize="30sp"-->
-<!--                    android:layout_weight="1"/>-->
-<!--                -->
-<!--                <ImageView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:src="@drawable/ic_baseline_restore_from_trash_24"-->
-<!--                    android:layout_gravity="end"/>-->
+            <!--                <TextView-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:text="test text test text"-->
+            <!--                    android:textSize="30sp"-->
+            <!--                    android:layout_weight="1"/>-->
+            <!--                -->
+            <!--                <ImageView-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:src="@drawable/ic_baseline_restore_from_trash_24"-->
+            <!--                    android:layout_gravity="end"/>-->
 
-            </LinearLayout>
+            <!--            </LinearLayout>-->
 
 
         </LinearLayout>

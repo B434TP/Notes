@@ -35,10 +35,9 @@ public class NotesRepoImpl implements NotesRepository {
         String[] textsRes = repoContext.getResources().getStringArray(R.array.textArray);
 
         for (int i = 0; i < titlesRes.length; i++) {
-            Note newNote = new Note(lastIndex, titlesRes[i], textsRes[i]);
-            Log.d("MyRepo", "addingNote: " + newNote);
+            Note newNote = new Note(i, titlesRes[i], textsRes[i]);
             notes.add(newNote);
-            lastIndex++;
+            lastIndex = i;
         }
     }
 
@@ -74,7 +73,8 @@ public class NotesRepoImpl implements NotesRepository {
         for (Note item : notes
         ) {
             if (!item.getRemoveStatus()) {
-                clearList.add(item);
+                if (!(item.getTitle() == "" && item.getText() == ""))
+                    clearList.add(item);
             }
         }
         return clearList;
@@ -83,7 +83,7 @@ public class NotesRepoImpl implements NotesRepository {
     @Override
     public int addNote(String title, String text) {
         int id = lastIndex + 1;
-        Note newNote = new Note(lastIndex, title, text);
+        Note newNote = new Note(id, title, text);
         notes.add(newNote);
         lastIndex = id;
         return id;

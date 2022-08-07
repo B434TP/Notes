@@ -4,6 +4,6 @@ public enum AllFragments {
     START,
     LIST,
     ABOUT,
-    DETAIL,
+    NEWDETAIL,
     BIN
 }

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/noteDetailFragment">
+
+    <fragment
+        android:id="@+id/notesListFragment"
+        android:name="ru.osa.gb.homework.notes.ui.NotesListFragment"
+        android:label="fragment_notes_list"
+        tools:layout="@layout/fragment_notes_list" >
+        <action
+            android:id="@+id/action_notesListFragment_to_noteDetailFragment"
+            app:destination="@id/noteDetailFragment" />
+        <action
+            android:id="@+id/action_notesListFragment_to_aboutFragment"
+            app:destination="@id/aboutFragment" />
+        <action
+            android:id="@+id/action_notesListFragment_to_recycleBinFragment"
+            app:destination="@id/recycleBinFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/noteDetailFragment"
+        android:name="ru.osa.gb.homework.notes.ui.NoteDetailFragment"
+        android:label="fragment_note_detail"
+        tools:layout="@layout/fragment_note_detail" >
+        <action
+            android:id="@+id/action_noteDetailFragment_to_selectDateFragment"
+            app:destination="@id/selectDateFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="ru.osa.gb.homework.notes.ui.AboutFragment"
+        android:label="fragment_about"
+        tools:layout="@layout/fragment_about" />
+    <dialog
+        android:id="@+id/selectDateFragment"
+        android:name="ru.osa.gb.homework.notes.ui.SelectDateFragment"
+        android:label="SelectDateFragment" />
+    <fragment
+        android:id="@+id/recycleBinFragment"
+        android:name="ru.osa.gb.homework.notes.ui.RecycleBinFragment"
+        android:label="RecycleBinFragment" />
+</navigation>

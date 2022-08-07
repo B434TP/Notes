@@ -8,12 +8,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentResultListener;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.LifecycleOwner;
 
-import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,7 +18,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 import ru.osa.gb.homework.notes.R;
 
@@ -55,11 +53,21 @@ public class MainActivity extends AppCompatActivity {
 
     private void initDrawer() {
 
+
+//        FloatingActionButton fab =  findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
+//
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // TODO: как-то заставить появитсья и заработать бургер
 //        getSupportActionBar().setIcon(R.drawable.ic_baseline_menu_24);
-
 
         // Находим DrawerLayout
 
@@ -143,7 +151,6 @@ public class MainActivity extends AppCompatActivity {
             case LIST:
                 NotesListFragment notesListFragment = NotesListFragment.getInstance();
                 ft.replace(R.id.mainFragmentContainer, notesListFragment);
-//                ft.addToBackStack("notesListFragment");
                 ft.commit();
                 break;
             case START:
@@ -157,12 +164,11 @@ public class MainActivity extends AppCompatActivity {
                 ft.addToBackStack("recycleBinFragment");
                 ft.commit();
                 break;
-            case DETAIL:
-////                // TODO: придумать как передавать id и надо ли вообще
-////                NoteDetailFragment noteDetailFragment = NoteDetailFragment.getInstance(0);
-////                ft.replace(R.id.mainFragmentContainer, noteDetailFragment);
-////                ft.addToBackStack("noteDetailFragment");
-////                ft.commit();
+            case NEWDETAIL:
+                NoteDetailFragment noteDetailFragment = NoteDetailFragment.getInstance();
+                ft.replace(R.id.mainFragmentContainer, noteDetailFragment);
+                ft.addToBackStack("noteDetailFragment");
+                ft.commit();
                 break;
         }
     }
@@ -186,8 +192,7 @@ public class MainActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.add_item:
-//                TODO: добавить добавление
-                Toast.makeText(this, "Добавить", Toast.LENGTH_SHORT).show();
+                selectFragment(AllFragments.NEWDETAIL);
                 break;
 
             case R.id.about_item:

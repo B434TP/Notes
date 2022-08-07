@@ -35,14 +35,25 @@ import ru.osa.gb.homework.notes.model.NotesRepository;
 public class NoteDetailFragment extends Fragment {
 
     private static int noteId;
+    private static boolean isNew = false;
     private static NoteDetailFragment fragment;
 
     public static NoteDetailFragment getInstance(int Id) {
         fragment = new NoteDetailFragment();
+        isNew = false;
         noteId = Id;
         Log.d("FRMS", "getInstance noteId: " + noteId);
+
         return fragment;
     }
+
+    public static NoteDetailFragment getInstance() {
+        fragment = new NoteDetailFragment();
+        isNew = true;
+        Log.d("FRMS", "getInstance noteId: NEW NOTE");
+        return fragment;
+    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,7 +81,14 @@ public class NoteDetailFragment extends Fragment {
 
     private void fillDetailNoteView(ViewGroup container, Context context) {
         NotesRepository notesRepository = NotesRepoImpl.getInstance(context);
-        Note note = notesRepository.getNote(noteId);
+        Note note;
+        if (!isNew) {
+            note = notesRepository.getNote(noteId);
+        } else {
+            noteId = notesRepository.addNote("", "");
+            Log.d("MyRepo", "addingNote: noteId: " + noteId);
+            note = notesRepository.getNote(noteId);
+        }
 
         TextInputEditText noteTitle = new TextInputEditText(context);
         noteTitle.setText(note.getTitle());
@@ -180,7 +198,7 @@ public class NoteDetailFragment extends Fragment {
                 MainActivity ma = (MainActivity) getActivity();
                 ma.selectFragment(AllFragments.LIST);
 
-                Snackbar.make(getView(),"Заметка перемеща в корзину",3000)
+                Snackbar.make(getView(), "Заметка перемеща в корзину", 3000)
                         .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE)
                         .setBehavior(new BaseTransientBottomBar.Behavior())
                         .setAction("ОТМЕНА", new View.OnClickListener() {

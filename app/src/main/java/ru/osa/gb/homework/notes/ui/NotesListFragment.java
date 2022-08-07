@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -57,11 +58,9 @@ public class NotesListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
         notesListView = inflater.inflate(R.layout.fragment_notes_list, container, false);
         listContainer = notesListView.findViewById(R.id.NoteListContainer);
         fillNotesListView();
-
 
         getActivity().getSupportFragmentManager().setFragmentResultListener("NOTES_LIST_ACTION", getViewLifecycleOwner(), new FragmentResultListener() {
             @Override
@@ -73,7 +72,6 @@ public class NotesListFragment extends Fragment {
                 }
             }
         });
-
 
         Log.d("FRMS", "NotesListFragment onCreateView: done");
         return notesListView;
@@ -110,7 +108,7 @@ public class NotesListFragment extends Fragment {
                                     listContainer.removeView(noteListItem);
                                     NotesRepository repo = NotesRepoImpl.getInstance(getContext());
                                     repo.removeNote(noteId);
-                                    Snackbar.make(getView(),"Заметка перемеща в корзину",3000)
+                                    Snackbar.make(getView(), "Заметка перемеща в корзину", 3000)
                                             .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE)
                                             .setBehavior(new BaseTransientBottomBar.Behavior())
                                             .setAction("ОТМЕНА", new View.OnClickListener() {
